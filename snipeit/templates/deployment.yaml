@@ -44,7 +44,7 @@ spec:
               value: {{ .Values.config.snipeit.timezone | quote }}
             - name: APP_LOCALE
               value: {{ .Values.config.snipeit.locale | quote }}
-            - name: TEST_VAR_TEST
+            - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: mysql-password
