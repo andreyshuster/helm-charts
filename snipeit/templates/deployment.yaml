@@ -47,10 +47,6 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ include "snipeit.fullname" . }}
-          envFrom:
-            - secretRef:
-                name: "TEST_ENV_VAR"
-                key: {{ .Values.mysql.existingSecret.mysqlPassword }}
           ports:
             - name: http
               containerPort: 80
