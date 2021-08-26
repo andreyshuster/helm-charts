@@ -31,6 +31,13 @@ spec:
               subPath: {{ .Values.persistence.sessions.subPath }}
         - name: initdb
           image: alpine
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: mysql-password
+                  name: snipeit-secrets
+          envFrom:
           command: ["/bin/sh", "-c"]
           args:
           - echo starting;
