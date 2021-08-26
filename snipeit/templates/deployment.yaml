@@ -30,11 +30,10 @@ spec:
               mountPath: {{ .Values.persistence.sessions.mountPath }}
               subPath: {{ .Values.persistence.sessions.subPath }}
         - name: initdb
-          image: alpine
+          image: mysql
           command: ["/bin/sh", "-c"]
           args:
           - echo starting;
-            apk add mysql-client;
             mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2;"
             echo done;
       containers:
