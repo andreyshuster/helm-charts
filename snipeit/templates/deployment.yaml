@@ -34,7 +34,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
           - echo starting;
-            apk add mysql mysql-client;
+            apk add mysql-client;
             mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2; select user from mysql.user;"
             echo done;
       containers:
