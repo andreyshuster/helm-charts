@@ -38,6 +38,10 @@ spec:
                   key: mysql-password
                   name: snipeit-secrets
           envFrom:
+            - secretRef:
+                name: {{ include "snipeit.fullname" . }}
+            - secretRef:
+                name: snipeit-secrets
           command: ["/bin/sh", "-c"]
           args:
           - echo starting;
