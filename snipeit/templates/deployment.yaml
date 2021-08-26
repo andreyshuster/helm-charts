@@ -29,7 +29,7 @@ spec:
             - name: data
               mountPath: {{ .Values.persistence.sessions.mountPath }}
               subPath: {{ .Values.persistence.sessions.subPath }}
-        - name: 
+        - name: initdb
           image: "{{ .Values.initcontainers.image }}"
           command: ["/bin/sh", "-c"]
           args:
