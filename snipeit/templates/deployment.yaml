@@ -30,10 +30,13 @@ spec:
               mountPath: {{ .Values.persistence.sessions.mountPath }}
               subPath: {{ .Values.persistence.sessions.subPath }}
         - name: initdb
-          image: arey/mysql-client
+          image: alpine
           command: ["/bin/sh", "-c"]
           args:
-          - mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2;"
+          - echo starting;
+            apk add mysql-client;
+            echo $MYSQL_PASSWORD;
+            env
       containers:
         - name: {{ include "snipeit.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
