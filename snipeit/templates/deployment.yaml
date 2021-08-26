@@ -46,7 +46,10 @@ spec:
           args:
           - echo starting;
             apk add mysql-client;
-            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2;";
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;";
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "CREATE USER IF NOT EXISTS $MYSQL_USER@'localhost' IDENTIFIED BY PASSWORD $MYSQL_PASSWORD";
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "GRANT ALL ON $MYSQL_DATABASE.* TO $MYSQL_USER@'localhost'";
+
       containers:
         - name: {{ include "snipeit.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
