@@ -29,6 +29,16 @@ spec:
             - name: data
               mountPath: {{ .Values.persistence.sessions.mountPath }}
               subPath: {{ .Values.persistence.sessions.subPath }}
+        - name: 
+          image: "{{ .Values.initcontainers.image }}"
+          command: ["/bin/sh", "-c"]
+          args:
+          - echo starting;
+            apk add mysql-client;
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;";
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "CREATE USER $MYSQL_USER IDENTIFIED BY $MYSQL_PASSWORD";
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "GRANT ALL ON $MYSQL_DATABASE TO $MYSQL_USER;";
+            echo done;
       containers:
         - name: {{ include "snipeit.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -44,16 +54,9 @@ spec:
               value: {{ .Values.config.snipeit.timezone | quote }}
             - name: APP_LOCALE
               value: {{ .Values.config.snipeit.locale | quote }}
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: mysql-password
-                  name: snipeit-secrets
           envFrom:
             - secretRef:
                 name: {{ include "snipeit.fullname" . }}
-            - secretRef:
-                name: snipeit-secrets
           ports:
             - name: http
               containerPort: 80
