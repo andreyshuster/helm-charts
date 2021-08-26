@@ -30,12 +30,10 @@ spec:
               mountPath: {{ .Values.persistence.sessions.mountPath }}
               subPath: {{ .Values.persistence.sessions.subPath }}
         - name: initdb
-          image: mysql
+          image: arey/mysql-client
           command: ["/bin/sh", "-c"]
           args:
-          - echo starting;
-            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2;"
-            echo done;
+          - mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2;"
       containers:
         - name: {{ include "snipeit.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
