@@ -57,6 +57,8 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ include "snipeit.fullname" . }}
+            - secretRef:
+                name: snipeit-secrets
           ports:
             - name: http
               containerPort: 80
