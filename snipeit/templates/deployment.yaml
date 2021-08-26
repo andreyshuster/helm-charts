@@ -46,7 +46,7 @@ spec:
           args:
           - echo starting;
             apk add mysql-client;
-            echo $MYSQL_PASSWORD;
+            mysql -h mysql.mysql -u root -p$MYSQL_PASSWORD -e "select 2+2;"
             env
       containers:
         - name: {{ include "snipeit.fullname" . }}
