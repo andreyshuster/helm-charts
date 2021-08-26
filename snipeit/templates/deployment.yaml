@@ -30,7 +30,7 @@ spec:
               mountPath: {{ .Values.persistence.sessions.mountPath }}
               subPath: {{ .Values.persistence.sessions.subPath }}
         - name: initdb
-          image: "{{ .Values.initcontainers.image }}"
+          image: alpine
           command: ["/bin/sh", "-c"]
           args:
           - echo starting;
